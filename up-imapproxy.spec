@@ -1,14 +1,13 @@
 Summary:	Imapproxy Daemon
 Summary(pl):	Serwer proxy dla protoko³u IMAP
 Name:		up-imapproxy
-Version:	1.2.2
-Release:	0.2
+Version:	1.2.3
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.imapproxy.org/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	cad615ad5825bfa565e0bf1ae1de2331
-Source1:	%{name}
-Patch0:		%{name}-DoS_fix.patch
+# Source0-md5:	ad4dafd1417903feb1e09ec569ff1ad5
+Source1:	%{name}.init
 URL:		http://www.imapproxy.org/
 BuildRequires:	libwrap-devel
 BuildRequires:	ncurses-devel
@@ -25,7 +24,6 @@ po¶rednicz±cy w po³±czeniach IMAP.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %configure
