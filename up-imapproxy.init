@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# up-imapproxy	Imap proxy server
+#
+# chkconfig:	345 85 15
+# description:	up-imapproxy is a simple proxy server for imap protocol.
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+
+# Check that networking is up.
+if is_no "${NETWORKING}"; then
+        # nls "ERROR: Networking is down. %s can't be run." <service>
+        msg_network_down up-imapproxy
+        exit 1
+fi
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+        if [ ! -f /var/lock/subsys/up-imapproxy ]; then
+		msg_starting up-imapproxy
+		daemon in.imapproxyd
+	        RETVAL=$?
+    		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/up-imapproxy
+	else
+        	msg_already_running up-imapproxy
+	        exit 1
+	fi
+	;;
+  stop)
+        # Stop daemons.
+	if [ -f /var/lock/subsys/up-imapproxy ]; then
+                msg_stopping up-imapproxy
+                killproc in.imapproxyd
+                rm -f /var/lock/subsys/up-imapproxy > /dev/null 2>&1
+        else
+		msg_not_running up-imapproxy
+	        exit 1
+	fi
+	;;
+  status)
+	status up-imapproxy
+	exit $?
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  reload)
+	if [ -f /var/lock/subsys/up-imapproxy ]; then
+		msg_reloading
+		busy
+		killproc in.imapproxyd -HUP
+		RETVAL=$?
+	else
+		msg_not_running up-imapproxy
+		exit 1
+	fi	  
+
+  *)
+	msg_usage "$0 {start|stop|restart|reload|status}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
