@@ -1,16 +1,17 @@
 Summary:	Imapproxy Daemon
 Summary(pl):	Serwer proxy dla protoko³u IMAP
 Name:		up-imapproxy
-Version:	1.2.1
-Release:	0.2
-License:        GPL
+Version:	1.2.2
+Release:	0.1
+License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.imapproxy.org/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	debd3edeb7441b9f713aaa9e9d7f2329
-Source1:	up-imapproxy
+# Source0-md5:	cad615ad5825bfa565e0bf1ae1de2331
+Source1:	%{name}
 URL:		http://www.imapproxy.org/
 BuildRequires:	libwrap-devel
 BuildRequires:	ncurses-devel
+BuildRequires:	openssl-devel >= 0.9.7d
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -22,7 +23,7 @@ Jest to buforuj±cy po³±czenia serwer proxy dla protoko³u IMAP,
 po¶rednicz±cy w po³±czeniach IMAP.
 
 %prep
-%setup
+%setup -q
 
 %build
 
@@ -34,10 +35,10 @@ po¶rednicz±cy w po³±czeniach IMAP.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_prefix}/sbin}
+install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sbindir}}
 
-install bin/* $RPM_BUILD_ROOT%{_prefix}/sbin
-install scripts/imapproxy.conf $RPM_BUILD_ROOT/etc
+install bin/* $RPM_BUILD_ROOT%{_sbindir}
+install scripts/imapproxy.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/imapproxy
 
 %clean
@@ -51,7 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README ChangeLog
+%doc README README.ssl ChangeLog
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/imapproxy.conf
 %attr(750,root,root) /etc/rc.d/init.d/imapproxy
 %attr(750,root,root) %{_sbindir}/*
