@@ -62,9 +62,9 @@ case "$1" in
 	else
 		msg_not_running up-imapproxy
 		exit 1
-	fi	  
-
-  *)
+	fi
+	;;
+	*)
 	msg_usage "$0 {start|stop|restart|reload|status}"
 	exit 1
 	;;
