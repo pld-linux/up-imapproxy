@@ -28,9 +28,7 @@ po¶rednicz±cy w po³±czeniach IMAP.
 %patch0 -p1
 
 %build
-
 %configure
-
 %{__make} \
 	CFLAGS="-I%{_includedir}/ncurses"
 
@@ -56,5 +54,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README README.ssl ChangeLog
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/imapproxy.conf
-%attr(750,root,root) /etc/rc.d/init.d/imapproxy
+%attr(754,root,root) /etc/rc.d/init.d/imapproxy
 %attr(750,root,root) %{_sbindir}/*
