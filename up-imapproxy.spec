@@ -22,7 +22,7 @@ Jest to buforuj±cy po³±czenia serwer proxy dla protoko³u IMAP,
 po¶rednicz±cy w po³±czeniach IMAP.
 
 %prep
-%setup 
+%setup
 
 %build
 
@@ -47,7 +47,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add imapproxy
 
 %preun
-/sbin/chkconfig --del imapproxy 
+/sbin/chkconfig --del imapproxy
 
 %files
 %defattr(644,root,root,755)
