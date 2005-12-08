@@ -15,7 +15,6 @@
 
 # Check that networking is up.
 if is_no "${NETWORKING}"; then
-        # nls "ERROR: Networking is down. %s can't be run." <service>
         msg_network_down up-imapproxy
         exit 1
 fi
