@@ -28,7 +28,7 @@ po¶rednicz±cy w po³±czeniach IMAP.
 %build
 %configure
 %{__make} \
-	CFLAGS="-I%{_includedir}/ncurses"
+	CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
 
 %install
 rm -rf $RPM_BUILD_ROOT
