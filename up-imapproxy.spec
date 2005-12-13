@@ -51,6 +51,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README README.ssl ChangeLog
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/imapproxy.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/imapproxy.conf
 %attr(754,root,root) /etc/rc.d/init.d/imapproxy
 %attr(750,root,root) %{_sbindir}/*
