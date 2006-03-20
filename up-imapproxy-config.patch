@@ -1,0 +1,55 @@
+--- up-imapproxy-1.2.4/scripts/imapproxy.conf~	2005-08-31 19:32:24.000000000 +0300
++++ up-imapproxy-1.2.4/scripts/imapproxy.conf	2006-03-20 16:08:51.000000000 +0200
+@@ -11,7 +11,7 @@
+ ##
+ ## This setting controls which imap server we proxy our connections to.
+ #
+-server_hostname your.imap.server.com
++server_hostname 127.0.0.1
+ 
+ 
+ #
+@@ -31,7 +31,7 @@
+ ## This setting specifies which port the proxy server will bind to and
+ ## accept incoming connections from.
+ #
+-listen_port 143
++listen_port 1143
+ 
+ 
+ #
+@@ -41,7 +41,7 @@
+ ## accept incoming connections to.  If undefined, bind to all.
+ ## Must be a dotted decimal IP address.
+ #
+-#listen_address 127.0.0.1
++listen_address 127.0.0.1
+ 
+ 
+ #
+@@ -67,14 +67,14 @@
+ ## This setting controls which username the imap proxy process will run as.
+ ## It is not allowed to run as "root".
+ #
+-proc_username nobody
++proc_username imapproxy
+ 
+ #
+ ## proc_groupname
+ ##
+ ## This setting controls which groupname the imap proxy process will run as.
+ #
+-proc_groupname nobody
++proc_groupname imapproxy
+ 
+ 
+ #
+@@ -117,7 +117,7 @@
+ ## By default, I've left this commented out so you will see all possible
+ ## log messages.
+ #
+-#syslog_prioritymask LOG_WARNING
++syslog_prioritymask LOG_WARNING
+ 
+ 
+ #
