@@ -1,3 +1,4 @@
+# TODO: update to 1.2.4 _and_ fix CVE-2005-2661
 Summary:	Imapproxy Daemon
 Summary(pl):	Serwer proxy dla protoko³u IMAP
 Name:		up-imapproxy
