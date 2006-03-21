@@ -53,3 +53,12 @@
  
  
  #
+@@ -164,7 +164,7 @@
+ ## a directory is specified here, imapproxy will chroot() to that
+ ## directory.
+ #
+-#chroot_directory /var/empty
++chroot_directory /usr/share/empty
+ 
+ 
+ #
