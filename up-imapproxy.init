@@ -45,7 +45,7 @@ case "$1" in
 	fi
 	;;
   status)
-	status up-imapproxy
+	status in.imapproxyd
 	exit $?
 	;;
   restart)
