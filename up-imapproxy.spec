@@ -2,7 +2,7 @@ Summary:	Imapproxy Daemon
 Summary(pl):	Serwer proxy dla protoko³u IMAP
 Name:		up-imapproxy
 Version:	1.2.4
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.imapproxy.org/downloads/%{name}-%{version}.tar.gz
