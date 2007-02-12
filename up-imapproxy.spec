@@ -1,5 +1,5 @@
 Summary:	Imapproxy Daemon
-Summary(pl):	Serwer proxy dla protoko³u IMAP
+Summary(pl.UTF-8):   Serwer proxy dla protokoÅ‚u IMAP
 Name:		up-imapproxy
 Version:	1.2.4
 Release:	5
@@ -30,9 +30,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This is a connection caching imapproxy daemon for proxied imap
 connections.
 
-%description -l pl
-Jest to buforuj±cy po³±czenia serwer proxy dla protoko³u IMAP,
-po¶rednicz±cy w po³±czeniach IMAP.
+%description -l pl.UTF-8
+Jest to buforujÄ…cy poÅ‚Ä…czenia serwer proxy dla protokoÅ‚u IMAP,
+poÅ›redniczÄ…cy w poÅ‚Ä…czeniach IMAP.
 
 %prep
 %setup -q
