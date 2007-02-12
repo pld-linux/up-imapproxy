@@ -1,5 +1,5 @@
 Summary:	Imapproxy Daemon
-Summary(pl.UTF-8):   Serwer proxy dla protokołu IMAP
+Summary(pl.UTF-8):	Serwer proxy dla protokołu IMAP
 Name:		up-imapproxy
 Version:	1.2.4
 Release:	5
