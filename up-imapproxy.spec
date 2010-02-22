@@ -1,12 +1,14 @@
+# TODO
+# - daemon fails (delays) to startup if the configured target imap server is down
 Summary:	Imapproxy Daemon
 Summary(pl.UTF-8):	Serwer proxy dla protokołu IMAP
 Name:		up-imapproxy
-Version:	1.2.6
-Release:	2
+Version:	1.2.7
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.imapproxy.org/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	decc6693a1497e5a1bc5704e5ed28c9b
+# Source0-md5:	036b487a9a6d2b955f81eb80bd9faee0
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 URL:		http://www.imapproxy.org/
@@ -45,12 +47,10 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sbindir}}
-
-install bin/* $RPM_BUILD_ROOT%{_sbindir}
-install scripts/imapproxy.conf $RPM_BUILD_ROOT%{_sysconfdir}
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/imapproxy
+install -p bin/* $RPM_BUILD_ROOT%{_sbindir}
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/imapproxy
+cp -a scripts/imapproxy.conf $RPM_BUILD_ROOT%{_sysconfdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -61,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add imapproxy
-%service imapproxy restart "IMAP proxy daemon"
+%service imapproxy restart "UP-IMAP Proxy"
 
 %preun
 if [ "$1" = "0" ]; then
@@ -80,4 +80,5 @@ fi
 %doc README README.ssl ChangeLog
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/imapproxy.conf
 %attr(754,root,root) /etc/rc.d/init.d/imapproxy
-%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_sbindir}/in.imapproxyd
+%attr(755,root,root) %{_sbindir}/pimpstat
