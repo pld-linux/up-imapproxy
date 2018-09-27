@@ -1,0 +1,57 @@
+--- up-imapproxy-1.2.7.orig/src/imapcommon.c	2010-02-20 18:16:58.000000000 +0100
++++ up-imapproxy-1.2.7/src/imapcommon.c	2018-09-27 11:43:57.312867137 +0200
+@@ -398,16 +398,18 @@
+     int rc;
+     unsigned int Expiration;
+ 
+-    EVP_MD_CTX mdctx;
++    EVP_MD_CTX *mdctx;
+     int md_len;
+ 
+     Expiration = PC_Struct.cache_expiration_time;
+     memset( &Server, 0, sizeof Server );
+     
+     /* need to md5 the passwd regardless, so do that now */
+-    EVP_DigestInit(&mdctx, EVP_md5());
+-    EVP_DigestUpdate(&mdctx, Password, strlen(Password));
+-    EVP_DigestFinal(&mdctx, md5pw, &md_len);
++    mdctx = EVP_MD_CTX_create();
++    EVP_DigestInit(mdctx, EVP_md5());
++    EVP_DigestUpdate(mdctx, Password, strlen(Password));
++    EVP_DigestFinal(mdctx, md5pw, &md_len);
++    EVP_MD_CTX_free(mdctx);
+     
+     /* see if we have a reusable connection available */
+     ICC_Active = NULL;
+--- up-imapproxy-1.2.7.orig/src/main.c	2010-02-20 18:16:58.000000000 +0100
++++ up-imapproxy-1.2.7/src/main.c	2018-09-27 11:41:32.938679196 +0200
+@@ -471,16 +471,8 @@
+ 	    /* Set up OpenSSL thread protection */
+ 	    ssl_thread_setup(fn);
+ 	    
+-            /* Need to seed PRNG, too! */
+-            if ( RAND_egd( ( RAND_file_name( f_randfile, sizeof( f_randfile ) ) == f_randfile ) ? f_randfile : "/.rnd" ) ) 
+-	    {
+-                /* Not an EGD, so read and write it. */
+-                if ( RAND_load_file( f_randfile, -1 ) )
+-                    RAND_write_file( f_randfile );
+-            }
+-	
+ 	    SSL_load_error_strings();
+-	    tls_ctx = SSL_CTX_new( TLSv1_client_method() );
++	    tls_ctx = SSL_CTX_new( TLS_client_method() );
+ 	    if ( tls_ctx == NULL )
+ 	    {
+ 		syslog(LOG_ERR, "%s: Failed to create new SSL_CTX.  Exiting.", fn);
+@@ -1381,9 +1373,9 @@
+ 	    verify_error = X509_V_ERR_CERT_CHAIN_TOO_LONG;
+ 	}
+     }
+-    switch (ctx->error) {
++    switch (X509_STORE_CTX_get_error(ctx)) {
+     case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT:
+-	X509_NAME_oneline(X509_get_issuer_name(ctx->current_cert), buf, sizeof(buf));
++	X509_NAME_oneline(X509_get_issuer_name(X509_STORE_CTX_get_current_cert(ctx)), buf, sizeof(buf));
+ 	syslog(LOG_NOTICE, "issuer= %s", buf);
+ 	break;
+     case X509_V_ERR_CERT_NOT_YET_VALID:

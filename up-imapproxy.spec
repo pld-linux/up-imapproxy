@@ -1,16 +1,18 @@
 # TODO
+# - rename to squirrelmail-imap_proxy
 # - daemon fails (delays) to startup if the configured target imap server is down
 Summary:	Imapproxy Daemon
 Summary(pl.UTF-8):	Serwer proxy dla protokołu IMAP
 Name:		up-imapproxy
 Version:	1.2.7
-Release:	6
+Release:	7
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.imapproxy.org/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	036b487a9a6d2b955f81eb80bd9faee0
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-openssl-1.1.patch
 URL:		http://www.imapproxy.org/
 BuildRequires:	automake
 BuildRequires:	libwrap-devel
@@ -38,6 +40,7 @@ pośredniczący w połączeniach IMAP.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
